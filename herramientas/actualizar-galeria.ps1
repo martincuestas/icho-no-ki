@@ -5,11 +5,8 @@
 #
 # Qué hace:
 #   1. Toma las fotos originales de Fotos\Galeria\ y genera
-#      versiones optimizadas para web en img\galeria\
-#      (una grande para el visor y una miniatura para la grilla).
-#   2. Optimiza las imágenes fijas del sitio (hero, sensei, etc.)
-#      desde Fotos\ hacia img\.
-#   3. Regenera galeria.js con la lista de fotos de la galería,
+#      versiones optimizadas para web en img\galeria\.
+#   2. Regenera galeria.js con la lista de fotos de la galería,
 #      ordenadas de más nueva a más vieja.
 #
 # Después de correrlo, subí el sitio al hosting y las fotos
@@ -22,7 +19,6 @@ Add-Type -AssemblyName System.Drawing
 $raiz = Split-Path -Parent $PSScriptRoot
 $carpetaOriginales = Join-Path $raiz 'Fotos\Galeria'
 $carpetaGaleriaWeb = Join-Path $raiz 'img\galeria'
-$carpetaImgWeb     = Join-Path $raiz 'img'
 $archivoManifiesto = Join-Path $raiz 'galeria.js'
 
 New-Item -ItemType Directory -Force -Path $carpetaGaleriaWeb | Out-Null
@@ -163,37 +159,6 @@ $($lineas -join "`r`n")
 
 [IO.File]::WriteAllText($archivoManifiesto, $contenido, (New-Object System.Text.UTF8Encoding($false)))
 Write-Host "  galeria.js actualizado con $($entradas.Count) fotos ($generadas nuevas)" -ForegroundColor Green
-
-# ------------------------------------------------------------
-# 2. Imágenes fijas del sitio
-# ------------------------------------------------------------
-
-Write-Host ''
-Write-Host '=== Imagenes fijas ===' -ForegroundColor Cyan
-
-# origen (en Fotos\) => destino (en img\), ancho máximo, calidad
-$fijas = @(
-    @{ origen = 'Hero.JPG';            destino = 'hero.jpg';             ancho = 1920; calidad = 78 }
-    @{ origen = 'WalterSensei.JPG';    destino = 'walter-sensei.jpg';    ancho = 1000; calidad = 82 }
-    @{ origen = 'Ueshiba.jpg';         destino = 'ueshiba.jpg';          ancho = 800;  calidad = 82 }
-    @{ origen = 'Ginkgo.jpg';          destino = 'ginkgo.jpg';           ancho = 1000; calidad = 82 }
-    @{ origen = 'RamaGinkgo.png';      destino = 'rama-ginkgo.png';      ancho = 900;  calidad = 0 }
-    @{ origen = 'HojaGinkgo.png';      destino = 'hoja-ginkgo.png';      ancho = 200;  calidad = 0 }
-    @{ origen = 'WalterHombuDojo.JPG'; destino = 'walter-hombu.jpg';     ancho = 1400; calidad = 82 }
-    @{ origen = 'Examen2025.JPG';      destino = 'examen-2025.jpg';      ancho = 1400; calidad = 82 }
-)
-
-foreach ($f in $fijas) {
-    $origen  = Join-Path $raiz "Fotos\$($f.origen)"
-    $destino = Join-Path $carpetaImgWeb $f.destino
-    if (-not (Test-Path $origen)) {
-        Write-Host "  [falta] Fotos\$($f.origen)" -ForegroundColor Yellow
-        continue
-    }
-    if (Optimizar-Imagen $origen $destino $f.ancho $f.calidad) {
-        Write-Host "  [nueva] img\$($f.destino)"
-    }
-}
 
 Write-Host ''
 Write-Host 'Listo. Ahora subi el sitio al hosting para publicar los cambios.' -ForegroundColor Green
