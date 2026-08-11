@@ -1,1 +1,7 @@
 favicon_io.zip
+
+# Fotos originales de la camara (pesan ~44 MB).
+# No se publican: el sitio usa las versiones optimizadas de img/,
+# que las genera "Actualizar Galeria.bat".
+# OJO: al no estar en el repo, estas fotos NO tienen backup en GitHub.
+Fotos/
