@@ -1,0 +1,86 @@
+# Configuracion del panel (Decap CMS)
+#
+# Cada cambio que hagas en el panel se guarda como un commit en
+# GitHub, y Netlify republica el sitio solo en menos de un minuto.
+
+backend:
+  name: github
+  repo: martincuestas/icho-no-ki
+  branch: master
+
+# Los cambios se publican directo, sin flujo de borradores
+publish_mode: simple
+
+# Carpeta por defecto donde se guardan las fotos que subas
+media_folder: "img/galeria"
+public_folder: "/img/galeria"
+
+locale: es
+
+collections:
+  - name: "galeria"
+    label: "Galería"
+    files:
+      - name: "fotos"
+        label: "Fotos de la galería"
+        file: "contenido/galeria.json"
+        description: "Arrastrá las fotos para cambiar el orden. La primera es la que aparece arriba a la izquierda."
+        editor:
+          preview: false
+        fields:
+          - name: "fotos"
+            label: "Fotos"
+            label_singular: "Foto"
+            widget: "list"
+            summary: "{{fields.alt}}"
+            fields:
+              - name: "imagen"
+                label: "Foto"
+                widget: "image"
+                required: true
+              - name: "alt"
+                label: "Descripción de la foto"
+                hint: "Para quien no puede ver la imagen, y para Google. Ej: 'Práctica de shomen uchi ikkyo en el tatami'."
+                widget: "string"
+                required: false
+                default: ""
+
+  - name: "eventos"
+    label: "Nuestro dojo"
+    files:
+      - name: "eventos"
+        label: "Eventos"
+        file: "contenido/eventos.json"
+        description: "Los eventos aparecen en la sección 'Nuestro dojo', en este mismo orden. El primero va arriba."
+        editor:
+          preview: false
+        fields:
+          - name: "eventos"
+            label: "Eventos"
+            label_singular: "Evento"
+            widget: "list"
+            summary: "{{fields.fecha}} — {{fields.titulo}}"
+            fields:
+              - name: "titulo"
+                label: "Título"
+                hint: "Ej: 'Seminario con Kurata Shihan'"
+                widget: "string"
+              - name: "fecha"
+                label: "Fecha"
+                hint: "Texto libre, como querés que se lea. Ej: 'Octubre de 2025', 'Marzo 2026', '2025'."
+                widget: "string"
+              - name: "descripcion"
+                label: "Descripción"
+                widget: "text"
+              - name: "imagen"
+                label: "Foto"
+                widget: "image"
+                required: true
+                media_folder: "/img/eventos"
+                public_folder: "/img/eventos"
+              - name: "alt"
+                label: "Descripción de la foto"
+                hint: "Para quien no puede ver la imagen, y para Google."
+                widget: "string"
+                required: false
+                default: ""

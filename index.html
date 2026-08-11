@@ -12,7 +12,7 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="Ichō no Ki — Dojo de Aikido">
     <meta property="og:description" content="Clases de Aikido, arte marcial japonés, en Palermo, Buenos Aires. ¡Te invitamos a probar una clase gratis! Miércoles y sábados.">
-    <meta property="og:image" content="img/walter-hombu-dojo.jpg">
+    <meta property="og:image" content="img/eventos/walter-hombu-dojo.jpg">
     <meta property="og:locale" content="es_AR">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -210,8 +210,9 @@
                 <h2>Galería</h2>
             </div>
             <p class="intro-seccion">Momentos del tatami. Tocá una foto para verla en grande.</p>
-            <!-- Las fotos se cargan solas desde galeria.js:
-                 tirá fotos en Fotos\Galeria y corré "Actualizar Galeria.bat" -->
+            <!-- Las fotos se cargan desde contenido/galeria.json.
+                 Para subir o bajar fotos entrá al panel: /admin
+                 Para cargar muchas de una, usá "Actualizar Galeria.bat" -->
             <div class="grilla-galeria" id="grilla-galeria"></div>
         </div>
     </section>
@@ -243,30 +244,9 @@
                 </div>
             </div>
 
-            <div class="eventos">
-
-                <div class="evento">
-                    <div class="evento-imagen">
-                        <img src="img/walter-hombu-dojo.jpg" alt="Walter Cuestas Sensei junto al Doshu Moriteru Ueshiba en el Hombu Dojo" loading="lazy">
-                    </div>
-                    <div class="evento-contenido">
-                        <span class="evento-fecha">Octubre de 2025</span>
-                        <h3>Walter Cuestas Sensei con Doshu Moriteru Ueshiba en Hombu Dojo</h3>
-                        <p>Nuestra escuela estuvo presente en el dojo fundado por O-Sensei Morihei Ueshiba, absorbiendo un poco de esa energía para compartirla en Argentina.</p>
-                    </div>
-                </div>
-
-                <div class="evento">
-                    <div class="evento-imagen">
-                        <img src="img/examen-2025.jpg" alt="Jornada de examen en el dojo" loading="lazy">
-                    </div>
-                    <div class="evento-contenido">
-                        <span class="evento-fecha">2025</span>
-                        <h3>Examen</h3>
-                        <p>Jornada de examen y brindis en el dojo. Contentos de seguir formando excelentes Aikidokas.</p>
-                    </div>
-                </div>
-            </div>
+            <!-- Los eventos se cargan desde contenido/eventos.json.
+                 Para agregar o sacar eventos entrá al panel: /admin -->
+            <div class="eventos" id="eventos"></div>
 
         </div>
     </section>
@@ -379,7 +359,6 @@
         <button class="lightbox-boton lightbox-siguiente" id="lightbox-siguiente" aria-label="Foto siguiente">&#8250;</button>
     </div>
 
-    <script src="galeria.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

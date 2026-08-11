@@ -1,0 +1,28 @@
+{
+    "fotos":  [
+                  {
+                      "imagen":  "/img/galeria/Tatami05.jpg",
+                      "alt":  "Tatami05"
+                  },
+                  {
+                      "imagen":  "/img/galeria/Tatami06.jpg",
+                      "alt":  "Tatami06"
+                  },
+                  {
+                      "imagen":  "/img/galeria/Tatami04.jpg",
+                      "alt":  "Tatami04"
+                  },
+                  {
+                      "imagen":  "/img/galeria/Tatami03.jpg",
+                      "alt":  "Tatami03"
+                  },
+                  {
+                      "imagen":  "/img/galeria/Tatami01.jpg",
+                      "alt":  "Tatami01"
+                  },
+                  {
+                      "imagen":  "/img/galeria/Tatami02.jpg",
+                      "alt":  "Tatami02"
+                  }
+              ]
+}

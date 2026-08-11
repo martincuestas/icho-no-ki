@@ -1,0 +1,18 @@
+{
+  "eventos": [
+    {
+      "titulo": "Walter Cuestas Sensei con Doshu Moriteru Ueshiba en Hombu Dojo",
+      "fecha": "Octubre de 2025",
+      "descripcion": "Nuestra escuela estuvo presente en el dojo fundado por O-Sensei Morihei Ueshiba, absorbiendo un poco de esa energía para compartirla en Argentina.",
+      "imagen": "/img/eventos/walter-hombu-dojo.jpg",
+      "alt": "Walter Cuestas Sensei junto al Doshu Moriteru Ueshiba en el Hombu Dojo"
+    },
+    {
+      "titulo": "Examen",
+      "fecha": "2025",
+      "descripcion": "Jornada de examen y brindis en el dojo. Contentos de seguir formando excelentes Aikidokas.",
+      "imagen": "/img/eventos/examen-2025.jpg",
+      "alt": "Jornada de examen en el dojo"
+    }
+  ]
+}

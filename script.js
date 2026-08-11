@@ -3,6 +3,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const menosMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
     // ============================================
+    // IMÁGENES
+    //
+    // Las fotos se suben desde el panel al tamaño que salieron
+    // de la cámara. Netlify las redimensiona al vuelo, así que
+    // el sitio pide siempre el ancho que necesita y nada más.
+    // En local ese servicio no existe: ahí se usa la foto tal cual.
+    // ============================================
+
+    const enLocal = ['localhost', '127.0.0.1', ''].includes(location.hostname)
+
+    function urlImagen(ruta, ancho) {
+        if (!ruta) return ''
+        if (enLocal || !ruta.startsWith('/')) return ruta
+        return `/.netlify/images?url=${encodeURIComponent(ruta)}&w=${ancho}&q=76`
+    }
+
+    async function leerJSON(ruta) {
+        try {
+            const respuesta = await fetch(ruta, { cache: 'no-cache' })
+            if (!respuesta.ok) throw new Error(respuesta.status)
+            return await respuesta.json()
+        } catch (error) {
+            console.error(`No se pudo leer ${ruta}:`, error)
+            return null
+        }
+    }
+
+    // ============================================
     // MENÚ HAMBURGUESA
     // ============================================
 
@@ -36,23 +64,60 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ============================================
-    // GALERÍA — las fotos vienen de galeria.js,
-    // generado por "Actualizar Galeria.bat"
+    // ANIMACIONES DE SCROLL
+    // ============================================
+
+    const observador = new IntersectionObserver((entradas, obs) => {
+        entradas.forEach(entrada => {
+            if (entrada.isIntersecting) {
+                entrada.target.classList.add('visible')
+                obs.unobserve(entrada.target)
+            }
+        })
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -60px 0px'
+    })
+
+    function animarAlAparecer(elementos) {
+        elementos.forEach(elemento => observador.observe(elemento))
+    }
+
+    animarAlAparecer(document.querySelectorAll(
+        '.tarjeta-clase, .bloque-filosofia, .bloque-dojo, .dato-contacto, .kanji-item, .grilla-galeria, .sensei, .encabezado-seccion'
+    ))
+
+    // ============================================
+    // GALERÍA — se carga desde contenido/galeria.json
     // ============================================
 
     const grilla = document.getElementById('grilla-galeria')
-    const fotos = typeof GALERIA !== 'undefined' ? GALERIA : []
+    let fotos = []
 
-    if (grilla && fotos.length) {
+    async function armarGaleria() {
+        if (!grilla) return
+
+        const datos = await leerJSON('contenido/galeria.json')
+        fotos = (datos && Array.isArray(datos.fotos) ? datos.fotos : []).filter(f => f && f.imagen)
+
+        if (!fotos.length) {
+            // Sin fotos cargadas, la sección entera sobra
+            const seccion = document.getElementById('galeria')
+            if (seccion) seccion.hidden = true
+            return
+        }
+
         fotos.forEach((foto, indice) => {
             const boton = document.createElement('button')
             boton.type = 'button'
             boton.className = 'foto-galeria'
-            boton.setAttribute('aria-label', `Ampliar foto ${indice + 1} de ${fotos.length}`)
+            boton.setAttribute('aria-label', foto.alt
+                ? `Ampliar: ${foto.alt}`
+                : `Ampliar foto ${indice + 1} de ${fotos.length}`)
 
             const img = document.createElement('img')
-            img.src = foto.thumb
-            img.alt = foto.alt
+            img.src = urlImagen(foto.imagen, 600)
+            img.alt = foto.alt || ''
             img.loading = 'lazy'
 
             boton.appendChild(img)
@@ -62,7 +127,66 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ============================================
-    // LIGHTBOX — usa la versión "full" de cada foto
+    // EVENTOS — se cargan desde contenido/eventos.json
+    // ============================================
+
+    async function armarEventos() {
+        const contenedor = document.getElementById('eventos')
+        if (!contenedor) return
+
+        const datos = await leerJSON('contenido/eventos.json')
+        const eventos = (datos && Array.isArray(datos.eventos) ? datos.eventos : [])
+            .filter(e => e && e.titulo)
+
+        if (!eventos.length) return
+
+        eventos.forEach(evento => {
+            const bloque = document.createElement('div')
+            bloque.className = 'evento'
+
+            const marcoImagen = document.createElement('div')
+            marcoImagen.className = 'evento-imagen'
+            if (evento.imagen) {
+                const img = document.createElement('img')
+                img.src = urlImagen(evento.imagen, 900)
+                img.alt = evento.alt || evento.titulo
+                img.loading = 'lazy'
+                marcoImagen.appendChild(img)
+            }
+
+            const texto = document.createElement('div')
+            texto.className = 'evento-contenido'
+
+            if (evento.fecha) {
+                const fecha = document.createElement('span')
+                fecha.className = 'evento-fecha'
+                fecha.textContent = evento.fecha
+                texto.appendChild(fecha)
+            }
+
+            const titulo = document.createElement('h3')
+            titulo.textContent = evento.titulo
+            texto.appendChild(titulo)
+
+            if (evento.descripcion) {
+                // Un párrafo por cada línea en blanco del texto cargado
+                evento.descripcion.split(/\n{2,}/).forEach(parrafo => {
+                    const p = document.createElement('p')
+                    p.textContent = parrafo.trim()
+                    texto.appendChild(p)
+                })
+            }
+
+            bloque.appendChild(marcoImagen)
+            bloque.appendChild(texto)
+            contenedor.appendChild(bloque)
+        })
+
+        animarAlAparecer(contenedor.querySelectorAll('.evento'))
+    }
+
+    // ============================================
+    // LIGHTBOX
     // ============================================
 
     const lightbox = document.getElementById('lightbox')
@@ -72,10 +196,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let botonQueAbrio = null
 
     function mostrarFoto(indice) {
+        if (!fotos.length) return
         indiceActual = (indice + fotos.length) % fotos.length
         const foto = fotos[indiceActual]
-        lightboxImg.src = foto.full
-        lightboxImg.alt = foto.alt
+        lightboxImg.src = urlImagen(foto.imagen, 1600)
+        lightboxImg.alt = foto.alt || ''
         lightboxContador.textContent = `${indiceActual + 1} / ${fotos.length}`
     }
 
@@ -114,27 +239,8 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     }
 
-    // ============================================
-    // ANIMACIONES DE SCROLL
-    // ============================================
-
-    const elementosAnimados = document.querySelectorAll(
-        '.tarjeta-clase, .bloque-filosofia, .evento, .bloque-dojo, .dato-contacto, .kanji-item, .grilla-galeria, .sensei, .encabezado-seccion'
-    )
-
-    const observador = new IntersectionObserver((entradas, obs) => {
-        entradas.forEach(entrada => {
-            if (entrada.isIntersecting) {
-                entrada.target.classList.add('visible')
-                obs.unobserve(entrada.target)
-            }
-        })
-    }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -60px 0px'
-    })
-
-    elementosAnimados.forEach(elemento => observador.observe(elemento))
+    armarGaleria()
+    armarEventos()
 
     // ============================================
     // NAV — se achica al scrollear y marca la sección actual
@@ -164,7 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let activa = null
         const limite = y + 140
         secciones.forEach(seccion => {
-            if (seccion.offsetTop <= limite) activa = seccion
+            if (!seccion.hidden && seccion.offsetTop <= limite) activa = seccion
         })
 
         enlacesNav.forEach(a => {

@@ -3,16 +3,23 @@
 #
 # Uso: doble clic en "Actualizar Galeria.bat" (en la raíz del sitio)
 #
+# Uso: doble clic en "Actualizar Galeria.bat" (en la raíz del sitio)
+#
+# Este script es el atajo para cargar MUCHAS fotos de una.
+# Para subir o bajar fotos de a una, o para cargar eventos,
+# usá el panel: https://TU-SITIO.netlify.app/admin
+#
 # Qué hace:
 #   1. Toma las fotos originales de Fotos\Galeria\ y genera
 #      versiones optimizadas para web en img\galeria\.
-#   2. Regenera galeria.js con la lista de fotos de la galería,
-#      ordenadas de más nueva a más vieja.
+#   2. AGREGA a contenido\galeria.json las fotos que todavía no
+#      estén listadas, de más nueva a más vieja.
 #   3. Genera las versiones web de las fotos fijas del sitio
-#      (sensei, Ueshiba, ginkgo, eventos) en img\.
+#      (sensei, Ueshiba, ginkgo) en img\.
 #
-# Después de correrlo, subí el sitio al hosting y las fotos
-# nuevas aparecen solas en la galería.
+# IMPORTANTE: este script solo agrega, nunca borra. Si sacás una
+# foto desde el panel, el script no la vuelve a poner salvo que
+# la foto original siga en Fotos\Galeria y la borres también de ahí.
 # ============================================================
 
 $ErrorActionPreference = 'Stop'
@@ -23,9 +30,12 @@ $carpetaFotos      = Join-Path $raiz 'Fotos'
 $carpetaOriginales = Join-Path $raiz 'Fotos\Galeria'
 $carpetaImgWeb     = Join-Path $raiz 'img'
 $carpetaGaleriaWeb = Join-Path $raiz 'img\galeria'
-$archivoManifiesto = Join-Path $raiz 'galeria.js'
+$carpetaEventosWeb = Join-Path $raiz 'img\eventos'
+$archivoManifiesto = Join-Path $raiz 'contenido\galeria.json'
 
 New-Item -ItemType Directory -Force -Path $carpetaGaleriaWeb | Out-Null
+New-Item -ItemType Directory -Force -Path $carpetaEventosWeb | Out-Null
+New-Item -ItemType Directory -Force -Path (Join-Path $raiz 'contenido') | Out-Null
 
 # ------------------------------------------------------------
 # Funciones auxiliares
@@ -122,47 +132,45 @@ $entradas = @()
 $generadas = 0
 
 foreach ($foto in $fotos) {
-    $base   = Nombre-Web ([IO.Path]::GetFileNameWithoutExtension($foto.Name))
-    $full   = Join-Path $carpetaGaleriaWeb "$base.jpg"
-    $thumb  = Join-Path $carpetaGaleriaWeb "$base-mini.jpg"
+    $base = Nombre-Web ([IO.Path]::GetFileNameWithoutExtension($foto.Name))
+    $web  = Join-Path $carpetaGaleriaWeb "$base.jpg"
 
-    if (Optimizar-Imagen $foto.FullName $full 1600 82)  { $generadas++; Write-Host "  [nueva] $base.jpg" }
-    if (Optimizar-Imagen $foto.FullName $thumb 600 78) { Write-Host "  [nueva] $base-mini.jpg" }
+    # Una sola version por foto: Netlify Image CDN se encarga de
+    # generar la miniatura al vuelo cuando el sitio la pide
+    if (Optimizar-Imagen $foto.FullName $web 1600 82) { $generadas++; Write-Host "  [nueva] $base.jpg" }
 
     $entradas += [pscustomobject]@{
-        base  = $base
-        fecha = Obtener-FechaFoto $foto.FullName
-        alt   = ($base -replace '[-_]', ' ')
+        imagen = "/img/galeria/$base.jpg"
+        fecha  = Obtener-FechaFoto $foto.FullName
+        alt    = ($base -replace '[-_]', ' ')
     }
 }
 
-# Borrar versiones web de fotos que ya no están en los originales
-$basesValidas = $entradas | ForEach-Object { $_.base }
-Get-ChildItem -Path $carpetaGaleriaWeb -Filter '*.jpg' -File | ForEach-Object {
-    $nombre = $_.BaseName -replace '-mini$', ''
-    if ($basesValidas -notcontains $nombre) {
-        Remove-Item $_.FullName -Force -Confirm:$false
-        Write-Host "  [borrada] $($_.Name) (ya no esta en Fotos\Galeria)" -ForegroundColor DarkYellow
+# Lo que ya esta publicado manda: el panel es la fuente de verdad.
+# Aca solo sumamos las fotos que todavia no figuran en el JSON.
+$yaListadas = @()
+if (Test-Path $archivoManifiesto) {
+    try {
+        $json = Get-Content $archivoManifiesto -Raw -Encoding UTF8 | ConvertFrom-Json
+        if ($json.fotos) { $yaListadas = @($json.fotos) }
+    } catch {
+        Write-Host "  contenido\galeria.json ilegible, se regenera de cero" -ForegroundColor Yellow
     }
 }
 
-# Manifiesto: de más nueva a más vieja
-$entradas = $entradas | Sort-Object fecha -Descending
+$rutasExistentes = $yaListadas | ForEach-Object { $_.imagen }
+$nuevas = @($entradas | Where-Object { $rutasExistentes -notcontains $_.imagen } | Sort-Object fecha -Descending)
 
-$lineas = foreach ($e in $entradas) {
-    "    { thumb: `"img/galeria/$($e.base)-mini.jpg`", full: `"img/galeria/$($e.base).jpg`", alt: `"$($e.alt)`" },"
-}
+# Las nuevas van arriba, de mas nueva a mas vieja
+$finales = @()
+$finales += $nuevas | ForEach-Object { [pscustomobject]@{ imagen = $_.imagen; alt = $_.alt } }
+$finales += $yaListadas | ForEach-Object { [pscustomobject]@{ imagen = $_.imagen; alt = $_.alt } }
 
-$contenido = @"
-// Archivo generado automaticamente por herramientas\actualizar-galeria.ps1
-// NO EDITAR A MANO: se sobreescribe cada vez que se corre el script.
-const GALERIA = [
-$($lineas -join "`r`n")
-];
-"@
+$salida = [pscustomobject]@{ fotos = @($finales) } | ConvertTo-Json -Depth 5
+[IO.File]::WriteAllText($archivoManifiesto, $salida, (New-Object System.Text.UTF8Encoding($false)))
 
-[IO.File]::WriteAllText($archivoManifiesto, $contenido, (New-Object System.Text.UTF8Encoding($false)))
-Write-Host "  galeria.js actualizado con $($entradas.Count) fotos ($generadas nuevas)" -ForegroundColor Green
+Write-Host "  contenido\galeria.json: $($finales.Count) fotos en total, $($nuevas.Count) agregadas" -ForegroundColor Green
+if ($generadas -gt 0) { Write-Host "  $generadas imagenes optimizadas" -ForegroundColor Green }
 
 # ------------------------------------------------------------
 # 2. Fotos fijas del sitio
@@ -176,14 +184,15 @@ Write-Host "  galeria.js actualizado con $($entradas.Count) fotos ($generadas nu
 Write-Host ''
 Write-Host '=== Fotos fijas ===' -ForegroundColor Cyan
 
+# Las fotos de eventos van a img\eventos porque las administra el panel
 $fotosFijas = @(
-    @{ origen = 'HojaGinkgo.png';      destino = 'hoja-ginkgo.png';       ancho = 200;  calidad = 90 }
-    @{ origen = 'RamaGinkgo.png';      destino = 'rama-ginkgo.png';       ancho = 900;  calidad = 90 }
-    @{ origen = 'Ginkgo.jpg';          destino = 'ginkgo.jpg';            ancho = 1200; calidad = 82 }
-    @{ origen = 'Ueshiba.jpg';         destino = 'ueshiba.jpg';           ancho = 900;  calidad = 84 }
-    @{ origen = 'WalterSensei.JPG';    destino = 'walter-sensei.jpg';     ancho = 1000; calidad = 82 }
-    @{ origen = 'WalterHombuDojo.JPG'; destino = 'walter-hombu-dojo.jpg'; ancho = 1400; calidad = 82 }
-    @{ origen = 'Examen2025.JPG';      destino = 'examen-2025.jpg';       ancho = 1400; calidad = 82 }
+    @{ origen = 'HojaGinkgo.png';      destino = 'hoja-ginkgo.png';               ancho = 200;  calidad = 90 }
+    @{ origen = 'RamaGinkgo.png';      destino = 'rama-ginkgo.png';               ancho = 900;  calidad = 90 }
+    @{ origen = 'Ginkgo.jpg';          destino = 'ginkgo.jpg';                    ancho = 1200; calidad = 82 }
+    @{ origen = 'Ueshiba.jpg';         destino = 'ueshiba.jpg';                   ancho = 900;  calidad = 84 }
+    @{ origen = 'WalterSensei.JPG';    destino = 'walter-sensei.jpg';             ancho = 1000; calidad = 82 }
+    @{ origen = 'WalterHombuDojo.JPG'; destino = 'eventos\walter-hombu-dojo.jpg'; ancho = 1400; calidad = 82 }
+    @{ origen = 'Examen2025.JPG';      destino = 'eventos\examen-2025.jpg';       ancho = 1400; calidad = 82 }
 )
 
 foreach ($f in $fotosFijas) {
