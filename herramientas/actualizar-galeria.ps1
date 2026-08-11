@@ -8,6 +8,8 @@
 #      versiones optimizadas para web en img\galeria\.
 #   2. Regenera galeria.js con la lista de fotos de la galería,
 #      ordenadas de más nueva a más vieja.
+#   3. Genera las versiones web de las fotos fijas del sitio
+#      (sensei, Ueshiba, ginkgo, eventos) en img\.
 #
 # Después de correrlo, subí el sitio al hosting y las fotos
 # nuevas aparecen solas en la galería.
@@ -17,7 +19,9 @@ $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.Drawing
 
 $raiz = Split-Path -Parent $PSScriptRoot
+$carpetaFotos      = Join-Path $raiz 'Fotos'
 $carpetaOriginales = Join-Path $raiz 'Fotos\Galeria'
+$carpetaImgWeb     = Join-Path $raiz 'img'
 $carpetaGaleriaWeb = Join-Path $raiz 'img\galeria'
 $archivoManifiesto = Join-Path $raiz 'galeria.js'
 
@@ -159,6 +163,45 @@ $($lineas -join "`r`n")
 
 [IO.File]::WriteAllText($archivoManifiesto, $contenido, (New-Object System.Text.UTF8Encoding($false)))
 Write-Host "  galeria.js actualizado con $($entradas.Count) fotos ($generadas nuevas)" -ForegroundColor Green
+
+# ------------------------------------------------------------
+# 2. Fotos fijas del sitio
+#
+# Las originales de Fotos\ pesan varios MB y algunas tienen la
+# extension en mayuscula (.JPG). El hosting distingue mayusculas
+# de minusculas, asi que el sitio siempre apunta a estas copias
+# de img\, con nombre en minuscula y peso para web.
+# ------------------------------------------------------------
+
+Write-Host ''
+Write-Host '=== Fotos fijas ===' -ForegroundColor Cyan
+
+$fotosFijas = @(
+    @{ origen = 'HojaGinkgo.png';      destino = 'hoja-ginkgo.png';       ancho = 200;  calidad = 90 }
+    @{ origen = 'RamaGinkgo.png';      destino = 'rama-ginkgo.png';       ancho = 900;  calidad = 90 }
+    @{ origen = 'Ginkgo.jpg';          destino = 'ginkgo.jpg';            ancho = 1200; calidad = 82 }
+    @{ origen = 'Ueshiba.jpg';         destino = 'ueshiba.jpg';           ancho = 900;  calidad = 84 }
+    @{ origen = 'WalterSensei.JPG';    destino = 'walter-sensei.jpg';     ancho = 1000; calidad = 82 }
+    @{ origen = 'WalterHombuDojo.JPG'; destino = 'walter-hombu-dojo.jpg'; ancho = 1400; calidad = 82 }
+    @{ origen = 'Examen2025.JPG';      destino = 'examen-2025.jpg';       ancho = 1400; calidad = 82 }
+)
+
+foreach ($f in $fotosFijas) {
+    # -Filter no distingue mayusculas, asi que encuentra .JPG y .jpg por igual
+    $archivo = Get-ChildItem -Path $carpetaFotos -Filter $f.origen -File -ErrorAction SilentlyContinue |
+               Select-Object -First 1
+
+    if (-not $archivo) {
+        Write-Host "  [falta] Fotos\$($f.origen)" -ForegroundColor Yellow
+        continue
+    }
+
+    $destino = Join-Path $carpetaImgWeb $f.destino
+    if (Optimizar-Imagen $archivo.FullName $destino $f.ancho $f.calidad) {
+        $kb = [int]((Get-Item $destino).Length / 1KB)
+        Write-Host "  [nueva] img\$($f.destino) ($kb KB)"
+    }
+}
 
 Write-Host ''
 Write-Host 'Listo. Ahora subi el sitio al hosting para publicar los cambios.' -ForegroundColor Green

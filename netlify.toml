@@ -1,0 +1,13 @@
+# Configuracion de Netlify — Icho no Ki
+#
+# El sitio es HTML/CSS/JS plano: no hay nada que compilar.
+# Netlify publica los archivos del repo tal como estan.
+#
+# Lo que este archivo define le gana a lo que este cargado
+# en el panel web, asi que la config queda versionada aca.
+
+[build]
+  # Sin comando de build: no hay package.json ni generador de sitios
+  command = ""
+  # La raiz del repo es la raiz del sitio
+  publish = "."

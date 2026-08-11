@@ -4,6 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Icho no Ki — Dojo de Aikido</title>
+
+    <!-- Este es el texto que Google muestra debajo del nombre del sitio -->
+    <meta name="description" content="Clases de Aikido, arte marcial japonés, en Palermo, Buenos Aires. ¡Te invitamos a probar una clase gratis! Miércoles y sábados.">
+    <meta name="theme-color" content="#0a0a0a">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Ichō no Ki — Dojo de Aikido">
+    <meta property="og:description" content="Clases de Aikido, arte marcial japonés, en Palermo, Buenos Aires. ¡Te invitamos a probar una clase gratis! Miércoles y sábados.">
+    <meta property="og:image" content="img/walter-hombu-dojo.jpg">
+    <meta property="og:locale" content="es_AR">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
@@ -12,14 +25,16 @@
 </head>
 <body>
 
-    <!-- NAVEGACIÓN -->
-<nav>
-    <div class="logo">
-        <span>銀杏の木 AIKIDO</span>
-        <img src="Fotos/HojaGinkgo.png" alt="" class="logo-hoja">
-    </div>
+    <a href="#clases" class="saltar-contenido">Saltar al contenido</a>
 
-    <button class="hamburguesa" id="hamburguesa">
+    <!-- NAVEGACIÓN -->
+<nav id="nav">
+    <a class="logo" href="#hero" aria-label="Ichō no Ki, inicio">
+        <span>銀杏の木 AIKIDO</span>
+        <img src="img/hoja-ginkgo.png" alt="" class="logo-hoja">
+    </a>
+
+    <button class="hamburguesa" id="hamburguesa" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">
         <span></span>
         <span></span>
         <span></span>
@@ -36,63 +51,90 @@
 
     <!-- HERO -->
     <section id="hero">
-        <span class="hero-kanji-fondo">合気道</span>
-        <h1>Ichō no Ki</h1>
-        <p class="kanji">銀杏の木</p>
-        <p class="subtitulo">Dojo de Aikido, Arte marcial japonés - Argentina, Ciudad Autonoma de Buenos Aires</p>
-        <p class="descripcion">Instructor Walter Cuestas</p>
-        <div class="hero-botones">
-            <a href="#clases" class="boton">Conocé las clases</a>
-            <a href="#contacto" class="boton">¡Contactate!</a>
+        <span class="hero-kanji-fondo" aria-hidden="true">合気道</span>
+        <div class="hero-contenido">
+            <h1>Ichō no Ki</h1>
+            <p class="kanji">銀杏の木</p>
+            <div class="hero-separador" aria-hidden="true"></div>
+            <p class="subtitulo">Dojo de Aikido — Arte marcial japonés</p>
+            <p class="descripcion">Buenos Aires · Instructor Walter Cuestas</p>
+            <div class="hero-botones">
+                <a href="#clases" class="boton boton-primario">Conocé las clases</a>
+                <a href="#contacto" class="boton">¡Contactate!</a>
+            </div>
         </div>
+        <a href="#clases" class="hero-scroll" aria-label="Bajar a la sección de clases">
+            <span class="hero-scroll-texto">Scroll</span>
+            <span class="hero-scroll-linea"></span>
+        </a>
     </section>
 
     <!-- CLASES -->
-
-
-
     <section id="clases" class="seccion-blanca">
         <div class="contenido-seccion">
-            <div class="linea-titulo"></div>
-            <h2>Clases</h2>
-         
+            <div class="encabezado-seccion">
+                <span class="eyebrow" aria-hidden="true">稽古</span>
+                <div class="linea-titulo"></div>
+                <h2>Clases</h2>
+            </div>
+
             <p class="intro-seccion">Ofrecemos clases para mayores de 16 años, desde principiantes hasta practicantes avanzados.</p>
-                        <div class="grilla-clases">
+
+            <div class="grilla-clases">
 
                 <div class="tarjeta-clase">
                     <h3>Clases semanales</h3>
-                    <p>Cultivamos el cuerpo y la mente, enfocandonos en el control de las técnicas y el cuidado del compañero.</p>
-                    <ul>
-                        <li>Miércoles — 19:30 hs</li>
-                        <li>Sábados — 15:00 hs</li>
+                    <p>Cultivamos el cuerpo y la mente, enfocándonos en el control de las técnicas y el cuidado del compañero.</p>
+                    <ul class="horarios">
+                        <li>
+                            <span class="dia">Miércoles</span>
+                            <span class="hora">19:30 hs</span>
+                        </li>
+                        <li>
+                            <span class="dia">Sábados</span>
+                            <span class="hora">10:00 — 11:30 hs</span>
+                        </li>
                     </ul>
                 </div>
 
                 <div class="tarjeta-clase">
                     <h3>Clase de prueba</h3>
                     <p>Primera clase gratuita para que conozcas el dojo, el grupo y la práctica sin ningún compromiso.</p>
-                    <ul>
-                        <li>Coordiná por WhatsApp o mail</li>
+                    <ul class="horarios">
+                        <li>
+                            <span class="dia">Coordiná tu clase</span>
+                            <span class="hora">Por WhatsApp o mail</span>
+                        </li>
                     </ul>
+                    <a href="#contacto" class="enlace-tarjeta">Escribinos <span aria-hidden="true">→</span></a>
                 </div>
 
             </div>
-            
-            <div class="sensei">
-                <h3>Instructor Walter Cuestas - 4to dan - Alumno de Katsutoshi Kurata Shihan</h3>
-                <img src="Fotos/WalterSensei.jpg" alt="Walter Cuestas Sensei">
-                <p>Walter Cuestas comenzó su camino en las artes marciales en el año 1981 con 14 años, practicando Karate okinawense estilo Shorin Ryu durante diez años. En el año 1990, conoce a Katsutoshi Kurata Shihan y comienza a practicar Aikido. En el año 1994 se forma como discípulo de Ricardo Dratman, alumno destacado de Kurata Sensei, quien había estudiado en Japón con Yamaguchi sensei, Kuroiwa sensei y Saito sensei, entre otros grandes maestros. En el año 2010 funda su propio Dojo, donde sigue dando clases hasta día de hoy, buscando transmitir el Aikido y el espíritu del Budo japonés.</p>
-            </div>
 
+            <div class="sensei">
+                <div class="sensei-encabezado">
+                    <h3>Instructor Walter Cuestas</h3>
+                    <p class="sensei-credencial">4to dan · Alumno de Katsutoshi Kurata Shihan</p>
+                </div>
+                <div class="sensei-foto">
+                    <img src="img/walter-sensei.jpg" alt="Walter Cuestas Sensei" loading="lazy">
+                </div>
+                <div class="sensei-texto">
+                    <p>Walter Cuestas comenzó su camino en las artes marciales en el año 1981 con 14 años, practicando Karate okinawense estilo Shorin Ryu durante diez años. En el año 1990, conoce a Katsutoshi Kurata Shihan y comienza a practicar Aikido. En el año 1994 se forma como discípulo de Ricardo Dratman, alumno destacado de Kurata Sensei, quien había estudiado en Japón con Yamaguchi sensei, Kuroiwa sensei y Saito sensei, entre otros grandes maestros. En el año 2010 funda su propio Dojo, donde sigue dando clases hasta día de hoy, buscando transmitir el Aikido y el espíritu del Budo japonés.</p>
+                </div>
+            </div>
 
         </div>
     </section>
 
-
-
+    <!-- ARTE MARCIAL -->
     <section id="arte_marcial" class="seccion-negra">
         <div class="contenido-seccion">
-            <div class="linea-titulo"></div>
+            <div class="encabezado-seccion centrado">
+                <span class="eyebrow" aria-hidden="true">合気道</span>
+                <div class="linea-titulo"></div>
+                <h2>Arte marcial</h2>
+            </div>
 
             <div class="bloque-filosofia solo-texto">
                 <div class="bloque-texto">
@@ -101,7 +143,7 @@
                     <div class="kanji-grid">
 
                         <div class="kanji-item">
-                            <span class="kanji">合</span>
+                            <span class="kanji" aria-hidden="true">合</span>
                             <div class="kanji-explicacion">
                                 <h4>Ai — Unión</h4>
                                 <p>Transmite la idea de armonía, de comunicación, de confluencia. Puede verse como una tapa ajustada a un recipiente.</p>
@@ -109,16 +151,16 @@
                         </div>
 
                         <div class="kanji-item">
-                            <span class="kanji">気</span>
+                            <span class="kanji" aria-hidden="true">気</span>
                             <div class="kanji-explicacion">
                                 <h4>Ki — Energía vital</h4>
-                                <p>Refiere al poder, la vibración, la escencia de la vida y el espíritu. El flujo invisible que conecta mente y cuerpo.</p>
-                                <p>Por lo tanto, Aiki, significa hacerse uno con la energía del universo.</p>
+                                <p>Refiere al poder, la vibración, la esencia de la vida y el espíritu. El flujo invisible que conecta mente y cuerpo.</p>
+                                <p>Por lo tanto, Aiki significa hacerse uno con la energía del universo.</p>
                             </div>
                         </div>
 
                         <div class="kanji-item">
-                            <span class="kanji">道</span>
+                            <span class="kanji" aria-hidden="true">道</span>
                             <div class="kanji-explicacion">
                                 <h4>Do — Camino</h4>
                                 <p>Presente al final de muchas artes marciales japonesas. No solo importan las técnicas o los resultados, sino el camino que transitamos, camino que nos regala una mejor forma de vida.</p>
@@ -130,10 +172,9 @@
                 </div>
             </div>
 
-
-            <div class="bloque-filosofia">
+            <div class="bloque-filosofia solo-texto">
                 <div class="bloque-texto">
-                    <h3> ¿Que es el Aikido? </h3>
+                    <h3>¿Qué es el Aikido?</h3>
                     <p>El fundamento del aikidō, como arte marcial, es el desarrollo del autocontrol para lograr armonizarse con el opuesto por medio de la regulación del espacio, el tiempo y la energía, independientemente de la masa, del género, de la edad o de la fuerza física de los practicantes y oponentes. Lo cual se puede sintetizar en la búsqueda del Shikaku (Punto vacío), por medio de kuzushi (desequilibrios) y de Tai sabaki (esquiva).</p>
                 </div>
             </div>
@@ -141,61 +182,62 @@
             <div class="bloque-filosofia">
                 <div class="bloque-texto">
                     <h3>Morihei Ueshiba — O-Sensei, el fundador</h3>
-                    <p> Nacido en 1883, se dedicó desde temprana edad a la educación tanto espiritual; mostrando gran interés por la meditación, las ceremonias y las plegarias; como marcial, estudiando Ju Jitsu (combate a manos libres) y Ken Jutsu (sable). Participó en la guerra ruso-japonesa a la edad de 20 años, donde ganó fama entre sus compañeros por su destacado valor, recibiendo el sobrenombre de "soldado kami".</p>
-                    <p> Tiempo despúes, lideró y trabajo incansablemente en el cultivo de la tierra en terrenos inhabitados. Terminada esta tarea, continuo en su busqueda del Budo a través del estudio de la Daito Ryu (escuela de Ju Jutsu) y siguiendo a maestros de la espiritualidad.</p>
-                    <p> Finalmente, fundó su propia escuela, la "Escuela Ueshiba", donde comenzo a forjar su teoría sobre la unificación del espíritu, la mente y el cuerpo. En 1923, nombró a su arte "Aiki Bujutsu". Continuó desarrollando su filosofía en viajes destinados a la paz, donde se vió acechado por numerosas amenazas como bandidos y soldados, oportunidad en la que demostró un dominio espiritual y una habilidad física casi sobrehumana en los conflictos. Con ayuda de numerosos simpatizantes, en 1930, fundó su dojo en el barrio de Shinjuku, Tokyo, que fue tenido en altísima estima (incluso entrenando a fuerzas policiales y funcionarios de la Corte Imperial) y sigue en funcionamiento a dia de hoy. </p>
-                    <p> En 1942, en plena escalada militar del entonces Imperio Japonés en la Segunda Guerra Mundial, se posicionó como un ferreo opositor a la violencia y a la expansión militar: "La armonía, el amor y la cortesía son los elementos escenciales del verdadero Budo, pero los que detentan el poder hoy en día no piensan sino en jugar con las armas. Creen equivocadamente que el Budo es un instrumento de violencia y destrucción...". Por esto, se retiró a la ciudad de Iwama, donde se dedicó a la agricultura y construyó un dojo al aire libre y un santuario de Aiki que le serviría como un lugar de retiro espiritual.</p>
-                    <p> Terminada la guerra continuo llevando la vida autosuficiente de un granjero y poniendo en práctica su idea de la unidad escencial entre el Budo y la agricultura, buscando perfeccionar el ideal del Takemutsu Aiki, estando profundamente convenido de que la tarea de un samurai auténtico era construir un mundo de paz y proteger toda forma de vida.</p>
-                    <p> En el año 1969, se apagó la vida del gran maestro, que vivió bajo sus ideales como un autentico samurai hasta el último de sus días, simbolizando la unión con las fuerzas cósmicas que constituye el ideal de las artes marciales, y trabajando por el bien de la humanidad y del mundo, dejandonos como legado un camino, una filosofía de la acción.</p>
-
+                    <p>Nacido en 1883, se dedicó desde temprana edad a la educación tanto espiritual; mostrando gran interés por la meditación, las ceremonias y las plegarias; como marcial, estudiando Ju Jitsu (combate a manos libres) y Ken Jutsu (sable). Participó en la guerra ruso-japonesa a la edad de 20 años, donde ganó fama entre sus compañeros por su destacado valor, recibiendo el sobrenombre de "soldado kami".</p>
+                    <p>Tiempo después, lideró y trabajó incansablemente en el cultivo de la tierra en terrenos inhabitados. Terminada esta tarea, continuó en su búsqueda del Budo a través del estudio de la Daito Ryu (escuela de Ju Jutsu) y siguiendo a maestros de la espiritualidad.</p>
+                    <p>Finalmente, fundó su propia escuela, la "Escuela Ueshiba", donde comenzó a forjar su teoría sobre la unificación del espíritu, la mente y el cuerpo. En 1923, nombró a su arte "Aiki Bujutsu". Continuó desarrollando su filosofía en viajes destinados a la paz, donde se vio acechado por numerosas amenazas como bandidos y soldados, oportunidad en la que demostró un dominio espiritual y una habilidad física casi sobrehumana en los conflictos. Con ayuda de numerosos simpatizantes, en 1930, fundó su dojo en el barrio de Shinjuku, Tokyo, que fue tenido en altísima estima (incluso entrenando a fuerzas policiales y funcionarios de la Corte Imperial) y sigue en funcionamiento a día de hoy.</p>
+                    <p>En 1942, en plena escalada militar del entonces Imperio Japonés en la Segunda Guerra Mundial, se posicionó como un férreo opositor a la violencia y a la expansión militar: "La armonía, el amor y la cortesía son los elementos esenciales del verdadero Budo, pero los que detentan el poder hoy en día no piensan sino en jugar con las armas. Creen equivocadamente que el Budo es un instrumento de violencia y destrucción...". Por esto, se retiró a la ciudad de Iwama, donde se dedicó a la agricultura y construyó un dojo al aire libre y un santuario de Aiki que le serviría como un lugar de retiro espiritual.</p>
+                    <p>Terminada la guerra continuó llevando la vida autosuficiente de un granjero y poniendo en práctica su idea de la unidad esencial entre el Budo y la agricultura, buscando perfeccionar el ideal del Takemusu Aiki, estando profundamente convencido de que la tarea de un samurái auténtico era construir un mundo de paz y proteger toda forma de vida.</p>
+                    <p>En el año 1969, se apagó la vida del gran maestro, que vivió bajo sus ideales como un auténtico samurái hasta el último de sus días, simbolizando la unión con las fuerzas cósmicas que constituye el ideal de las artes marciales, y trabajando por el bien de la humanidad y del mundo, dejándonos como legado un camino, una filosofía de la acción.</p>
                 </div>
                 <div class="bloque-imagen">
-                    <img src="Fotos/Ueshiba.jpg" alt=" Morihei Ueshiba">
+                    <img src="img/ueshiba.jpg" alt="Morihei Ueshiba" loading="lazy">
                     <blockquote>
-                    <p>"El Budo no consiste en derrotar al adversario por medio de nuestra fuerza. Tampoco es una herramienta para provocar la destrucción del mundo. El verdadero Budo consiste en aceptar el espíritu del Universo, salvaguardar la paz en el mundo, proteger y favorecer el crecimiento de todos los seres."</p>
-                    <cite>— Morihei Ueshiba</cite>
+                        <p>"El Budo no consiste en derrotar al adversario por medio de nuestra fuerza. Tampoco es una herramienta para provocar la destrucción del mundo. El verdadero Budo consiste en aceptar el espíritu del Universo, salvaguardar la paz en el mundo, proteger y favorecer el crecimiento de todos los seres."</p>
+                        <cite>— Morihei Ueshiba</cite>
                     </blockquote>
                 </div>
             </div>
 
-            <!-- SUBSECCIÓN 2 — con foto a la izquierda -->
-
         </div>
      </section>
 
-
-
+    <!-- GALERÍA -->
     <section id="galeria" class="seccion-blanca">
         <div class="contenido-seccion">
-            <div class="linea-titulo"></div>
-            <h2>Galería</h2>
-                <!-- Las fotos se cargan solas desde galeria.js:
-                     tirá fotos en Fotos\Galeria y corré "Actualizar Galeria.bat" -->
-                <div class="grilla-galeria" id="grilla-galeria"></div>
+            <div class="encabezado-seccion">
+                <span class="eyebrow" aria-hidden="true">写真</span>
+                <div class="linea-titulo"></div>
+                <h2>Galería</h2>
+            </div>
+            <p class="intro-seccion">Momentos del tatami. Tocá una foto para verla en grande.</p>
+            <!-- Las fotos se cargan solas desde galeria.js:
+                 tirá fotos en Fotos\Galeria y corré "Actualizar Galeria.bat" -->
+            <div class="grilla-galeria" id="grilla-galeria"></div>
         </div>
     </section>
-
-
 
     <!-- DOJO -->
     <section id="dojo" class="seccion-negra">
         <div class="contenido-seccion">
-            <div class="linea-titulo"></div>
-            <h2>Nuestro dojo</h2>
+            <div class="encabezado-seccion">
+                <span class="eyebrow" aria-hidden="true">道場</span>
+                <div class="linea-titulo"></div>
+                <h2>Nuestro dojo</h2>
+            </div>
 
             <div class="bloque-dojo">
                 <div class="bloque-dojo-contenido">
 
                     <div class="bloque-izquierda">
                         <h3>Sobre el nombre: Ichō no Ki</h3>
-                        <p> 銀杏の木 (Ichō no Ki) significa "árbol de Ginkgo" en japonés. El Ginkgo es la especie arbórea más antigua del planeta, tanto que se lo considera un "fosil viviente"; coexistio con los dinosaurios y sobrevivió a multiples eventos catastróficos, como extinciones masivas y cambios climaticos.
-                        Incluso, relata la historia, sobrevivió a la bomba atómica detonada sobre Hiroshima, donde increíblemente, semanas luego a la destrucción de la ciudad, arboles de Ginkgo rebrotaron cerca del epicentro de la explosión, convirtiendose así en un símbolo de reciliencia, de perseveración y de esperanza. Hoy día, es el árbol oficial de Tokyo, y comunmente se lo conoce como "Arbol de la Vida".
+                        <p>銀杏の木 (Ichō no Ki) significa "árbol de Ginkgo" en japonés. El Ginkgo es la especie arbórea más antigua del planeta, tanto que se lo considera un "fósil viviente"; coexistió con los dinosaurios y sobrevivió a múltiples eventos catastróficos, como extinciones masivas y cambios climáticos.
+                        Incluso, relata la historia, sobrevivió a la bomba atómica detonada sobre Hiroshima, donde increíblemente, semanas luego de la destrucción de la ciudad, árboles de Ginkgo rebrotaron cerca del epicentro de la explosión, convirtiéndose así en un símbolo de resiliencia, de perseverancia y de esperanza. Hoy día, es el árbol oficial de Tokyo, y comúnmente se lo conoce como "Árbol de la Vida".
                         </p>
-                        <img src="Fotos/Ginkgo.jpg" alt="Árbol Ginkgo">
+                        <img src="img/ginkgo.jpg" alt="Árbol Ginkgo" loading="lazy">
                     </div>
 
                     <div class="bloque-dojo-imagen">
-                        <img src="Fotos/RamaGinkgo.png" alt="Rama de árbol Ginkgo">
+                        <img src="img/rama-ginkgo.png" alt="Rama de árbol Ginkgo" loading="lazy">
                     </div>
 
                 </div>
@@ -204,69 +246,91 @@
             <div class="eventos">
 
                 <div class="evento">
-                    <img src="Fotos/WalterHombuDojo.jpg" alt="Walter Cuestas Sensei en Hombu Dojo">
+                    <div class="evento-imagen">
+                        <img src="img/walter-hombu-dojo.jpg" alt="Walter Cuestas Sensei junto al Doshu Moriteru Ueshiba en el Hombu Dojo" loading="lazy">
+                    </div>
                     <div class="evento-contenido">
-                        <h3>Walter Cuestas Sensei con Doshu Moriteru Ueshiba en Hombu Dojo - Octubre de 2025</h3>
-                        <p> Nuestra escuela estuvo presente en el dojo fundado por O-Sensei Morihei Ueshiba, absorbiendo un poco de esa energía para compartirla en Argentina. </p>
+                        <span class="evento-fecha">Octubre de 2025</span>
+                        <h3>Walter Cuestas Sensei con Doshu Moriteru Ueshiba en Hombu Dojo</h3>
+                        <p>Nuestra escuela estuvo presente en el dojo fundado por O-Sensei Morihei Ueshiba, absorbiendo un poco de esa energía para compartirla en Argentina.</p>
                     </div>
                 </div>
 
                 <div class="evento">
-                    <img src="Fotos/Examen2025.jpg" alt="Walter Cuestas Sensei en Hombu Dojo">
+                    <div class="evento-imagen">
+                        <img src="img/examen-2025.jpg" alt="Jornada de examen en el dojo" loading="lazy">
+                    </div>
                     <div class="evento-contenido">
-                        <h3>Examen - 2025</h3>
-                        <p> Jornada de examen y brindis en el dojo. Contentos de seguir formando excelentes Aikidokas. </p>
+                        <span class="evento-fecha">2025</span>
+                        <h3>Examen</h3>
+                        <p>Jornada de examen y brindis en el dojo. Contentos de seguir formando excelentes Aikidokas.</p>
                     </div>
                 </div>
             </div>
 
-
         </div>
     </section>
 
-
-    <section id="contacto" class="seccion-blanca">
+    <!-- CONTACTO -->
+    <section id="contacto" class="seccion-negra seccion-contacto">
         <div class="contenido-seccion">
-            <div class="linea-titulo"></div>
-            <h2>Contacto</h2>
-             <p class="intro-seccion">¿Tenés ganas de practicar Aikido? ¡Escribinos!.</p>
+            <div class="encabezado-seccion">
+                <span class="eyebrow" aria-hidden="true">連絡</span>
+                <div class="linea-titulo"></div>
+                <h2>Contacto</h2>
+            </div>
+            <p class="intro-seccion">¿Tenés ganas de practicar Aikido? ¡Escribinos!</p>
 
             <div class="info-contacto">
 
-            <div class="dato-contacto">
-                <p>📧 Mail</p>
-                <a href="https://mail.google.com/mail/?view=cm&to=wfcuestas@gmail.com" target="_blank">wfcuestas@gmail.com</a>
-            </div>
+                <div class="dato-contacto">
+                    <p class="dato-etiqueta">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="1.5"/><path d="M3 6.5l9 6.5 9-6.5"/></svg>
+                        Mail
+                    </p>
+                    <a href="https://mail.google.com/mail/?view=cm&to=wfcuestas@gmail.com" target="_blank" rel="noopener">wfcuestas@gmail.com</a>
+                </div>
 
-            <div class="dato-contacto">
-                <p>📱 WhatsApp</p>
-                <a href="https://wa.me/5491139520106">+54 9 11 39520106</a>
-            </div>
+                <div class="dato-contacto">
+                    <p class="dato-etiqueta">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 20.5l1.3-4.4A8.2 8.2 0 1 1 8 19.3l-4.5 1.2z"/><path d="M9 8.5c.3 2 1.6 4.4 3.4 5.6"/></svg>
+                        WhatsApp
+                    </p>
+                    <a href="https://wa.me/5491123190502" target="_blank" rel="noopener">+54 9 11 2319-0502</a>
+                </div>
 
-            <div class="dato-contacto">
-                <p>📸 Instagram</p>
-                <a href="https://instagram.com/aikido_ichonoki_dojo" target="_blank">@aikido_ichonoki_dojo</a>
-            </div>
+                <div class="dato-contacto">
+                    <p class="dato-etiqueta">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg>
+                        Instagram
+                    </p>
+                    <a href="https://instagram.com/aikido_ichonoki_dojo" target="_blank" rel="noopener">@aikido_ichonoki_dojo</a>
+                </div>
 
-            <div class="dato-contacto">
-                <p>📍 Ubicación</p>
-                <p>Ciudad Autónoma de Buenos Aires (CABA), Palermo / Scalabrini Ortiz 1147</p>
-            </div>
-            <div class="mapa">
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3284.392982828886!2d-58.43208302452512!3d-34.59422295699638!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcca7770b02af7%3A0x2449136b26b532f6!2sClinch%20House!5e0!3m2!1ses-419!2sar!4v1777910630985!5m2!1ses-419!2sar" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-                    width="100%"
-                    height="400"
-                    style="border:0;"
-                    allowfullscreen=""
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
-            </div>
+                <div class="dato-contacto">
+                    <p class="dato-etiqueta">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.9 7-11a7 7 0 1 0-14 0c0 5.1 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+                        Ubicación
+                    </p>
+                    <p class="dato-valor">Scalabrini Ortiz 1147 — Palermo<br>Ciudad Autónoma de Buenos Aires</p>
+                </div>
 
+                <div class="mapa">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3284.392982828886!2d-58.43208302452512!3d-34.59422295699638!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcca7770b02af7%3A0x2449136b26b532f6!2sClinch%20House!5e0!3m2!1ses-419!2sar!4v1777910630985!5m2!1ses-419!2sar"
+                        title="Ubicación del dojo en Scalabrini Ortiz 1147, Palermo"
+                        width="100%"
+                        height="400"
+                        style="border:0;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+
+            </div>
         </div>
     </section>
-
 
     <footer>
         <div class="footer-contenido">
@@ -291,9 +355,9 @@
             <div class="footer-contacto">
                 <h4>Contacto</h4>
                 <ul>
-                    <li><a href="https://mail.google.com/mail/?view=cm&to=wfcuestas@gmail.com" target="_blank">wfcuestas@gmail.com</a></li>
-                    <li><a href="https://wa.me/5491139520106">+54 9 11 3952-0106</a></li>
-                    <li><a href="https://instagram.com/aikido_ichonoki_dojo" target="_blank">@aikido_ichonoki_dojo</a></li>
+                    <li><a href="https://mail.google.com/mail/?view=cm&to=wfcuestas@gmail.com" target="_blank" rel="noopener">wfcuestas@gmail.com</a></li>
+                    <li><a href="https://wa.me/5491123190502" target="_blank" rel="noopener">+54 9 11 2319-0502</a></li>
+                    <li><a href="https://instagram.com/aikido_ichonoki_dojo" target="_blank" rel="noopener">@aikido_ichonoki_dojo</a></li>
                 </ul>
             </div>
         </div>
@@ -303,7 +367,17 @@
             <p>Diseñado con 合気</p>
         </div>
     </footer>
-       
+
+    <!-- LIGHTBOX DE GALERÍA -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Foto ampliada" hidden>
+        <button class="lightbox-boton lightbox-cerrar" id="lightbox-cerrar" aria-label="Cerrar">&times;</button>
+        <button class="lightbox-boton lightbox-anterior" id="lightbox-anterior" aria-label="Foto anterior">&#8249;</button>
+        <figure class="lightbox-figura">
+            <img id="lightbox-img" src="" alt="">
+            <figcaption id="lightbox-contador"></figcaption>
+        </figure>
+        <button class="lightbox-boton lightbox-siguiente" id="lightbox-siguiente" aria-label="Foto siguiente">&#8250;</button>
+    </div>
 
     <script src="galeria.js"></script>
     <script src="script.js"></script>
