@@ -5,3 +5,8 @@ favicon_io.zip
 # que las genera "Actualizar Galeria.bat".
 # OJO: al no estar en el repo, estas fotos NO tienen backup en GitHub.
 Fotos/
+
+# Solo aparecen cuando se corre el optimizador de imagenes a mano
+node_modules/
+package-lock.json
+package.json

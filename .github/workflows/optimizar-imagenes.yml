@@ -1,0 +1,48 @@
+# Comprime las fotos que entran al repo desde el panel (/admin).
+#
+# Decap sube las fotos tal como salen de la camara, de varios MB. Esta
+# accion las reescribe con el mismo nombre, asi las rutas guardadas en
+# contenido/galeria.json y contenido/eventos.json siguen valiendo.
+#
+# No hay riesgo de bucle: el push lo hace la propia accion con
+# GITHUB_TOKEN, y GitHub por diseno no dispara workflows con ese token.
+
+name: Optimizar imagenes
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'img/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  optimizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Instalar sharp
+        run: npm install --no-save --no-fund --no-audit sharp
+
+      - name: Comprimir
+        run: node herramientas/optimizar-imagenes.mjs
+
+      - name: Publicar los cambios
+        run: |
+          if [ -z "$(git status --porcelain img)" ]; then
+            echo "No habia nada para comprimir."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add img
+          git commit -m "Comprimir las imagenes subidas por el panel"
+          git push

@@ -45,6 +45,7 @@ collections:
                 label: "Foto"
                 widget: "image"
                 required: true
+                hint: "Mientras no publiques, el recuadro va a salir roto: la foto todavia no esta subida. Al apretar Publicar aparece."
               - name: "alt"
                 label: "Descripción de la foto"
                 hint: "Para quien no puede ver la imagen, y para Google. Ej: 'Práctica de shomen uchi ikkyo en el tatami'."
@@ -83,6 +84,7 @@ collections:
                 label: "Foto"
                 widget: "image"
                 required: true
+                hint: "Mientras no publiques, el recuadro va a salir roto: la foto todavia no esta subida. Al apretar Publicar aparece."
                 media_folder: "/img/eventos"
                 public_folder: "/img/eventos"
               - name: "alt"
