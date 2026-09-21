@@ -20,6 +20,13 @@
       "titulo": "¡Jornada de examenes en el dojo!",
       "descripcion": "Celebramos otra vez a nuestros alumnos, que demostraron su alto nivel marcial y humano que caracteriza y forma a nuestro dojo.",
       "imagen": "/img/eventos/_mg_6730.jpg"
+    },
+    {
+      "alt": "",
+      "titulo": "Nos visitó el maestro Ricardo Dratman",
+      "fecha": "Septiembre de 2026",
+      "descripcion": "Tuvimos el honor de recibir en nuestro dojo y divertinos practicando con el gran aikidoka y maestro de maestros...",
+      "imagen": "/img/eventos/_mg_6724.jpg"
     }
   ]
 }
