@@ -11,3 +11,14 @@
   command = ""
   # La raiz del repo es la raiz del sitio
   publish = "."
+  # Login del panel: netlify/functions/auth.mjs y callback.mjs
+  functions = "netlify/functions"
+
+# Una sola direccion oficial. Hasta ahora el sitio respondia igual con y sin
+# www: eso divide el posicionamiento en Google y rompe el login del panel,
+# porque el dominio tiene que coincidir con el base_url de admin/config.yml.
+[[redirects]]
+  from = "https://www.ichonokidojo.com.ar/*"
+  to = "https://ichonokidojo.com.ar/:splat"
+  status = 301
+  force = true

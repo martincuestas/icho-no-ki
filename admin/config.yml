@@ -8,6 +8,13 @@ backend:
   repo: martincuestas/icho-no-ki
   branch: master
 
+  # El login pasa por nuestras propias funciones, no por el proxy compartido
+  # de Netlify (discontinuado, y donde se colgaba diciendo "Authorized").
+  # OJO: auth_endpoint SIN barra al principio. Decap arma la URL como
+  # base_url + "/" + auth_endpoint, y con barra quedaria doble.
+  base_url: https://ichonokidojo.com.ar
+  auth_endpoint: .netlify/functions/auth
+
 # Los cambios se publican directo, sin flujo de borradores
 publish_mode: simple
 
