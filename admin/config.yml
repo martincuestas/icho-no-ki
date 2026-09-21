@@ -3,6 +3,11 @@
 # Cada cambio que hagas en el panel se guarda como un commit en
 # GitHub, y Netlify republica el sitio solo en menos de un minuto.
 
+# Permite abrir el panel contra los archivos locales, sin GitHub, corriendo
+#   npx decap-server
+# y entrando a http://localhost:4321/admin. Solo funciona desde localhost.
+local_backend: true
+
 backend:
   name: github
   repo: martincuestas/icho-no-ki
@@ -45,7 +50,7 @@ collections:
                 label: "Foto"
                 widget: "image"
                 required: true
-                hint: "Mientras no publiques, el recuadro va a salir roto: la foto todavia no esta subida. Al apretar Publicar aparece."
+                hint: "Si el recuadro sale roto, es cache del navegador, no un error: la foto igual se sube bien. Con Ctrl+Shift+R se ve."
               - name: "alt"
                 label: "Descripción de la foto"
                 hint: "Para quien no puede ver la imagen, y para Google. Ej: 'Práctica de shomen uchi ikkyo en el tatami'."
@@ -84,7 +89,7 @@ collections:
                 label: "Foto"
                 widget: "image"
                 required: true
-                hint: "Mientras no publiques, el recuadro va a salir roto: la foto todavia no esta subida. Al apretar Publicar aparece."
+                hint: "Si el recuadro sale roto, es cache del navegador, no un error: la foto igual se sube bien. Con Ctrl+Shift+R se ve."
                 media_folder: "/img/eventos"
                 public_folder: "/img/eventos"
               - name: "alt"
